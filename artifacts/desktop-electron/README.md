@@ -1,36 +1,16 @@
 # Desktop Electron оболочка
 
-Этот пакет превращает текущий проект в desktop-приложение и добавляет production-hardening для Steam.
+Этот пакет превращает текущий проект в desktop-приложение:
 
-## Что уже реализовано
-
-- Single-instance lock (второй запуск фокусирует существующее окно).
-- Crash/error handling (`uncaughtException`, `unhandledRejection`, обработка падения backend).
-- Безопасный preload + IPC API:
-  - `desktop.getApiBaseUrl()`
-  - `desktop.getAppVersion()`
-  - `desktop.quit()`
-- Корректный shutdown backend:
-  - `SIGTERM` с grace period,
-  - принудительный `SIGKILL` при таймауте.
+- запускает backend `@workspace/api-server` как локальный процесс (на `PORT`, по умолчанию `4123`),
+- ждёт готовность `/api/healthz`,
+- открывает UI `@workspace/life-sim` в окне Electron.
 
 ## Команды
 
 - `pnpm --filter @workspace/desktop-electron run dev` — запуск Electron (ожидает, что фронтенд запущен отдельно)
 - `pnpm run desktop:dev` — запускает Vite frontend и Electron вместе
 - `pnpm run desktop:build` — собирает frontend и создаёт Windows installer через electron-builder
-
-## SteamPipe шаблоны
-
-В папке `steam/` добавлены шаблоны:
-
-- `app_build_template.vdf`
-- `depot_build_windows.vdf`
-
-Перед загрузкой в Steam замените:
-
-- `REPLACE_WITH_STEAM_APP_ID`
-- `REPLACE_WITH_WINDOWS_DEPOT_ID`
 
 ## Steam
 
